@@ -12,7 +12,8 @@ char usr[50], pwd[50], Tusr[50], Tpwd[50], t[5] = {'\0'};
 int PID, i;
 struct User_Profile
 {
-    char Books_Owned
+    char Books_Owned;
+    char wishlist;
 };
 
 struct Books
