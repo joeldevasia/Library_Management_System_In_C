@@ -241,6 +241,8 @@ int Registration()
 
 int main()
 {
+    FILE *file;
+    file=fopen("database.txt", "w");
     printf(" SFIT LIBRARY MANAGEMENT PORTAL\n\n");
 Start:
     printf("Type index in front of the Service You Want\n1-Registration\n2-Login\n3-Exit\n\nChoice: ");
