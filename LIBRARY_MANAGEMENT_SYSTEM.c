@@ -22,20 +22,21 @@ struct Books
     char Name[100];
     char Author[50];
     int Owned;
+    int wishlist;
 } B[100] =
     {
-        {1, "To Kill a Mockingbird", "Harper Lee", 0},
-        {2, "1984", "George Orwell", 0},
-        {3, "Harry Potter and the Philosophers Stone", "J.K. Rowling", 0},
-        {4, "The Lord of the Rings", "J.R.R. Tolkien", 0},
-        {5, "The Great Gatsby", "F. Scott Fitzgerald", 0},
-        {6, "Pride and Prejudice", "Jane Austen", 0},
-        {7, "The Diary Of A Young Girl", "Anne Frank", 0},
-        {8, "The Book Thief", "Markus Zusak", 0},
-        {9, "The Hobbit", "J.R.R. Tolkien", 0},
-        {10, "Little Women", "Louisa May Alcott", 0},
-        {11, "Fahrenheit 451", "Ray Bradbury", 0},
-        {12, "Jane Eyre", "Charlotte Bronte", 0}
+        {1, "To Kill a Mockingbird", "Harper Lee", 0, 0},
+        {2, "1984", "George Orwell", 0, 0},
+        {3, "Harry Potter and the Philosophers Stone", "J.K. Rowling", 0, 0},
+        {4, "The Lord of the Rings", "J.R.R. Tolkien", 0, 0},
+        {5, "The Great Gatsby", "F. Scott Fitzgerald", 0, 0},
+        {6, "Pride and Prejudice", "Jane Austen", 0, 0},
+        {7, "The Diary Of A Young Girl", "Anne Frank", 0, 0},
+        {8, "The Book Thief", "Markus Zusak", 0, 0},
+        {9, "The Hobbit", "J.R.R. Tolkien", 0, 0},
+        {10, "Little Women", "Louisa May Alcott", 0, 0},
+        {11, "Fahrenheit 451", "Ray Bradbury", 0, 0},
+        {12, "Jane Eyre", "Charlotte Bronte", 0, 0}
 
 };
 
@@ -58,6 +59,18 @@ int Book_Info()
         }
         else if (strcmp(t, "y") != 0)
         {
+            if (B[a - 1].wishlist != 1)
+            {
+                printf("Would you like to add this book to your wishlist?[y/n]: ");
+                scanf(" %s", t);
+                if (strcmp(t, "y") == 0)
+                {
+                    B[a - 1].wishlist = 1;
+                    printf("\n.\n.\n.\nThe Book has been added to your Wishlist Successfully.\n");
+                }
+            }
+            else
+                printf("\n.\n.\n.\nThis Book is already in your wishlist!!\n");
             printf("Returning back to previous page...");
             getch();
             system("cls");
@@ -84,7 +97,8 @@ Start:
     printf("  PID: %d \n", PID);
     printf("  1-Change Username");
     printf("\n  2-Change Password");
-    printf("\n  3-Go Back\n  Choice: ");
+    printf("\n  3-Your Wishlist");
+    printf("\n  4-Go Back\n  Choice: ");
     scanf("%d", &a);
     system("cls");
     if (a == 1)
@@ -128,6 +142,28 @@ Start:
         goto Start;
     }
     else if (a == 3)
+    {
+        system("cls");
+        printf("Books added to wishlist can be seen here\n\n");
+        for (i = 0; i < 12; i++)
+        {
+            a=0;
+            if (B[i].wishlist == 1)
+            {
+                a=1;
+                printf("   %d.   %s.   By %s\n\n", B[i].Index, B[i].Name, B[i].Author);
+            }
+        }
+        if(a=0)
+        {
+            printf("\n\nYou haven't added any book to your Wishlist");
+        }
+        printf("\n\n  Press any key to go back...  ");
+        getch();
+        system("cls");
+        Profile();
+    }
+    else if (a == 4)
         MainPage();
     else
     {
@@ -156,7 +192,6 @@ Start:
     else if (a > 0 && a < 13)
     {
         Book_Info();
-        printf("\nHello World!!  %d", a);
         getch();
     }
     else
@@ -197,9 +232,11 @@ Stop:
 }
 
 int Login()
-{Start:
+{
+Start:
     printf("\n\n\t\tLogin Page\n");
     printf("Username :  ");
+    fgets(Tusr, sizeof(Tusr), stdin);
     fgets(Tusr, sizeof(Tusr), stdin);
     printf("Password :  ");
     fgets(Tpwd, sizeof(Tpwd), stdin);
@@ -217,7 +254,7 @@ int Login()
         system("cls");
         goto Start;
     }
-    
+
     return 0;
 }
 
@@ -242,7 +279,7 @@ int Registration()
 int main()
 {
     FILE *file;
-    file=fopen("database.txt", "w");
+    file = fopen("database.txt", "w");
     printf(" SFIT LIBRARY MANAGEMENT PORTAL\n\n");
 Start:
     printf("Type index in front of the Service You Want\n1-Registration\n2-Login\n3-Exit\n\nChoice: ");
